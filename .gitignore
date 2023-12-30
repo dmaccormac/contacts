@@ -1,3 +1,9 @@
+#DS_Store
+**/.DS_Store
+
+#DB config file
+dbconf.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
