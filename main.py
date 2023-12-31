@@ -1,7 +1,7 @@
-from contactbook import *
+from book import *
 
 # Examples
 
-# read all contacts
-book = ContactBook()
-print(book.read())
+# view all contacts
+book = Book()
+print(book.view())
