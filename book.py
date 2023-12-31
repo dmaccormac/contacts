@@ -28,3 +28,7 @@ class Book:
 
         table = self.createTable(self.contacts)
         return (table)
+
+    def add(self, name: str, address: str, phone: str, email: str):
+        contact = Contact(None, name, address, phone, email)
+        self.db.insert(contact)
