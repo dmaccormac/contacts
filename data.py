@@ -25,3 +25,11 @@ class Data:
         cursor = self.db.cursor()
         cursor.execute(sql, values)
         self.db.commit()
+
+    def update(self, contact):
+        sql = "UPDATE contacts SET name = (%s), address = (%s), phone = (%s), email = (%s) WHERE id = (%s)"
+        values = (contact.name, contact.address,
+                  contact.phone, contact.email, contact.id)
+        cursor = self.db.cursor()
+        cursor.execute(sql, values)
+        self.db.commit()
