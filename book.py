@@ -36,3 +36,7 @@ class Book:
     def update(self, id, name, address, phone, email):
         contact = Contact(id, name, address, phone, email)
         self.db.update(contact)
+
+    def delete(self, id):
+        contact = Contact(id, None, None, None, None)
+        self.db.delete(contact)

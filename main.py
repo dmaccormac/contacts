@@ -11,3 +11,6 @@ print(book.view())
 
 # update contact
 # book.update(13, "Viola", "Sideway 321", "(555) 9876", "viola@example.com")
+
+# delete contact with id 20
+# book.delete(20)
