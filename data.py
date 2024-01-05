@@ -12,6 +12,16 @@ class Data:
             database=database
         )
 
+    def getContactById(self, id):
+        sql = "SELECT * FROM contacts WHERE id = (%s)"
+        values = list()
+        values.append(id)
+        cursor = self.db.cursor()
+        cursor.execute(sql, values)
+        result = cursor.fetchone()
+        contact = Contact(*result)
+        return contact
+
     def read(self):
         cursor = self.db.cursor()
         sql = "SELECT * FROM contacts"

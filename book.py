@@ -33,9 +33,23 @@ class Book:
         contact = Contact(None, name, address, phone, email)
         self.db.insert(contact)
 
-    def update(self, id, name, address, phone, email):
-        contact = Contact(id, name, address, phone, email)
-        self.db.update(contact)
+    def update(self, id):
+        contact = self.db.getContactById(id)
+        updated_contact = self.getUpdateValues(contact)
+        self.db.update(updated_contact)
+
+    def getUpdateValues(self, contact: Contact):
+        update_list = list()
+        record = (*contact,)
+
+        for field in range(1, len(record)):
+            value = input('[' + record[field] + ']:')
+            if (value != ''):
+                update_list.append(value)
+            else:
+                update_list.append(record[field])
+
+        return Contact(contact.id, *update_list)
 
     def delete(self, id):
         contact = Contact(id, None, None, None, None)
