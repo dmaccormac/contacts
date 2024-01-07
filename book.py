@@ -1,32 +1,19 @@
 import pandas as pd
 from contact import Contact
-from data import Data
+from database import Database
 
 
 class Book:
     def __init__(self):
-        self.contacts = list()
-        self.db = Data()
-
-    def createTable(self, contacts: list):
-        df = pd.DataFrame(
-            contacts, columns=['Id', 'Name', 'Address', 'Phone', 'Email'])
-        df.set_index('Id', inplace=True)
-
-        return (df)
+        self.db = Database()
 
     def view(self):
-        self.contacts.clear()
-
-        items = self.db.read()
-        for item in items:
-            self.contacts.append(Contact(*item))
-
+        contacts = self.db.getAll()
         results = list()
-        for contact in self.contacts:
+        for contact in contacts:
             results.append((*contact,))
 
-        table = self.createTable(self.contacts)
+        table = self._formatTable(results)
         return (table)
 
     def add(self, name, address, phone, email):
@@ -34,11 +21,25 @@ class Book:
         self.db.insert(contact)
 
     def update(self, id):
-        contact = self.db.getContactById(id)
-        updated_contact = self.getUpdateValues(contact)
+        contact = self.db.get(id)
+        updated_contact = self._updateContact(contact)
         self.db.update(updated_contact)
 
-    def getUpdateValues(self, contact: Contact):
+    def delete(self, id):
+        self.db.delete(id)
+
+    def search(self, term):
+        results = self.db.search(term)
+        return self._formatTable(results)
+
+    def _formatTable(self, contacts: list):
+        dataFrame = pd.DataFrame(
+            contacts, columns=['Id', 'Name', 'Address', 'Phone', 'Email'])
+        dataFrame.set_index('Id', inplace=True)
+
+        return (dataFrame)
+
+    def _updateContact(self, contact: Contact):
         update_list = list()
         record = (*contact,)
 
@@ -50,11 +51,3 @@ class Book:
                 update_list.append(record[field])
 
         return Contact(contact.id, *update_list)
-
-    def delete(self, id):
-        contact = Contact(id, None, None, None, None)
-        self.db.delete(contact)
-
-    def search(self, term):
-        results = self.db.search(term)
-        return self.createTable(results)

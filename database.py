@@ -3,16 +3,15 @@ from contact import Contact
 import configparser
 
 
-class Data:
+class Database:
     def __init__(self):
-
         appConfig = configparser.ConfigParser()
         appConfig.read('config.ini')
         dbConfig = dict(appConfig.items('Database'))
 
         self.db = mysql.connector.connect(**dbConfig)
 
-    def getContactById(self, id):
+    def get(self, id):
         sql = "SELECT * FROM contacts WHERE id = (%s)"
         values = list()
         values.append(id)
@@ -22,7 +21,7 @@ class Data:
         contact = Contact(*result)
         return contact
 
-    def read(self):
+    def getAll(self):
         cursor = self.db.cursor()
         sql = "SELECT * FROM contacts"
         cursor.execute(sql)
@@ -44,10 +43,10 @@ class Data:
         cursor.execute(sql, values)
         self.db.commit()
 
-    def delete(self, contact: Contact):
+    def delete(self, id):
         sql = "DELETE FROM contacts WHERE id = (%s)"
         values = list()
-        values.append(contact.id)
+        values.append(id)
         cursor = self.db.cursor()
         cursor.execute(sql, values)
         self.db.commit()
