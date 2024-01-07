@@ -1,16 +1,16 @@
 import mysql.connector
-from dbconf import *
 from contact import Contact
+import configparser
 
 
 class Data:
     def __init__(self):
-        self.db = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=database
-        )
+
+        appConfig = configparser.ConfigParser()
+        appConfig.read('config.ini')
+        dbConfig = dict(appConfig.items('Database'))
+
+        self.db = mysql.connector.connect(**dbConfig)
 
     def getContactById(self, id):
         sql = "SELECT * FROM contacts WHERE id = (%s)"
