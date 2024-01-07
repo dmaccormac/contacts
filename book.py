@@ -54,3 +54,7 @@ class Book:
     def delete(self, id):
         contact = Contact(id, None, None, None, None)
         self.db.delete(contact)
+
+    def search(self, term):
+        results = self.db.search(term)
+        return self.createTable(results)

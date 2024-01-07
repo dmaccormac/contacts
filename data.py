@@ -51,3 +51,13 @@ class Data:
         cursor = self.db.cursor()
         cursor.execute(sql, values)
         self.db.commit()
+
+    def search(self, term):
+        term = f"%{term}%"
+        cursor = self.db.cursor()
+        sql = "SELECT * FROM contacts WHERE name LIKE (%s)"
+        values = list()
+        values.append(term)
+        cursor.execute(sql, values)
+        results = cursor.fetchall()
+        return (results)

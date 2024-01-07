@@ -6,6 +6,9 @@ from book import *
 book = Book()
 print(book.view())
 
+# search
+print(book.search("John"))
+
 # add new contact
 # book.add("John", "Main Road 232", "(555) 1234", "john@example.com")
 
