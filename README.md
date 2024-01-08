@@ -1,5 +1,5 @@
 # contacts
 
-contact book built using python any mysql
+contact book built using python and mysql
 
 see main.py for examples
