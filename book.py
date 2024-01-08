@@ -42,9 +42,11 @@ class Book:
     def _updateContact(self, contact: Contact):
         update_list = list()
         record = (*contact,)
+        field_names = ["Id", "Name", "Address", "Phone", "Email"]
 
         for field in range(1, len(record)):
-            value = input('[' + record[field] + ']:')
+            prompt = record[field] if record[field] else "None"
+            value = input(field_names[field] + " [" + prompt + "]:")
             if (value != ''):
                 update_list.append(value)
             else:

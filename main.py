@@ -10,7 +10,7 @@ print(book.view())
 # book.add("John", "Main Road 232", "(555) 1234", "john@example.com")
 
 # update contact
-# book.update(10)
+# book.update(7)
 
 # delete contact
 # book.delete(10)
