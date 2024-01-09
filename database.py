@@ -1,15 +1,48 @@
 import mysql.connector
 from contact import Contact
-import configparser
 
 
 class Database:
-    def __init__(self):
-        appConfig = configparser.ConfigParser()
-        appConfig.read('config.ini')
-        dbConfig = dict(appConfig.items('Database'))
+    def __init__(self, dbConfig):
+        self.dbConfig = dbConfig
+        self.db = None
+        self.cursor = None
 
-        self.db = mysql.connector.connect(**dbConfig)
+    def openDatabase(self, name):
+        try:
+            self.db = mysql.connector.connect(**self.dbConfig, database=name)
+        except:
+            print("could not open database")
+
+    def createDatabase(self, name):
+        # connect to server
+        try:
+            self.db = mysql.connector.connect(**self.dbConfig)
+
+        except:
+            print("could not connect to database server")
+
+        # create the database
+        try:
+            cursor = self.db.cursor()
+            sql = f"CREATE DATABASE {name}"
+            cursor.execute(sql)
+        except:
+            print("could not create database")
+
+        # connect to database and create table
+        try:
+            self.db = mysql.connector.connect(**self.dbConfig, database=name)
+            sql = """CREATE TABLE contacts
+                    (id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255),
+                    address VARCHAR(255),
+                    phone VARCHAR(255),
+                    email VARCHAR(255))"""
+            cursor = self.db.cursor()
+            cursor.execute(sql)
+        except:
+            print("could not create table")
 
     def get(self, id):
         sql = "SELECT * FROM contacts WHERE id = (%s)"

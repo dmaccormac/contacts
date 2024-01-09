@@ -1,11 +1,21 @@
 import pandas as pd
+import configparser
 from contact import Contact
 from database import Database
 
 
 class Book:
     def __init__(self):
-        self.db = Database()
+        appConfig = configparser.ConfigParser()
+        appConfig.read('config.ini')
+        dbConfig = dict(appConfig.items('Database'))
+        self.db = Database(dbConfig)
+
+    def open(self, name):
+        self.db.openDatabase(name)
+
+    def create(self, name):
+        self.db.createDatabase(name)
 
     def view(self):
         contacts = self.db.getAll()
