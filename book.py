@@ -26,6 +26,20 @@ class Book:
         table = self._formatTable(results)
         return (table)
 
+    def viewPages(self):
+        offset = 0
+        maxRows = 10
+
+        while True:
+            contacts = self.db.getLimit(offset, maxRows)
+            if (contacts == []):
+                break
+
+            self._clearScreen()
+            print(self._formatTable(contacts))
+            input(":")
+            offset += maxRows
+
     def add(self, name, address, phone, email):
         contact = Contact(None, name, address, phone, email)
         self.db.insert(contact)
@@ -63,3 +77,6 @@ class Book:
                 update_list.append(record[field])
 
         return Contact(contact.id, *update_list)
+
+    def _clearScreen(self):
+        print("\033c", end='')

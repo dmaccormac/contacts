@@ -44,6 +44,13 @@ class Database:
         except:
             print("could not create table")
 
+    def getLimit(self, offset, maxRows):
+        cursor = self.db.cursor()
+        sql = f"SELECT * FROM contacts ORDER BY id LIMIT {offset},{maxRows}"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        return results
+
     def get(self, id):
         sql = "SELECT * FROM contacts WHERE id = (%s)"
         values = list()

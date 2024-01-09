@@ -6,6 +6,8 @@ from book import Book
 book = Book()
 book.open('mybook')
 
+book.viewPages()
+
 # create a database
 # book.create("mybook")
 
