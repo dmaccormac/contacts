@@ -4,6 +4,7 @@ from book import Book
 
 # initialize book class
 book = Book()
+book.open('mybook')
 
 # create a database
 # book.create("mybook")
