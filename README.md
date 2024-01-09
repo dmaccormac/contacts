@@ -1,4 +1,4 @@
-# contacts experimental branch
+# contacts
 
 contact book built using python and mysql
 
